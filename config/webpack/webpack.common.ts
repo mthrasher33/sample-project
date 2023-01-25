@@ -6,6 +6,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config: Configuration = {
   entry: './src/index.tsx',
+  output: {
+    path: path.resolve(__dirname, '../../', 'build'),
+    filename: 'bundle.js'
+  },
   module: {
     rules: [
       {
@@ -33,12 +37,9 @@ const config: Configuration = {
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js', '.jsx']
   },
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
-  },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html'

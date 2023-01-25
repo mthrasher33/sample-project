@@ -6,7 +6,7 @@ import commonConfig from './webpack.common';
 const devConfig: Configuration = {
   mode: 'development',
   devServer: {
-    static: path.join(__dirname, 'build'),
+    static: path.join(__dirname, '../../', 'build'),
     compress: true,
     port: 4000
   }
