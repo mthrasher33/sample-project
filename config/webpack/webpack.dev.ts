@@ -7,8 +7,18 @@ const devConfig: Configuration = {
   mode: 'development',
   devServer: {
     static: path.join(__dirname, '../../', 'build'),
-    compress: true,
-    port: 4000
+    compress: false,
+    port: 4000,
+    hot: true,
+    allowedHosts: 'all',
+    client: {
+      webSocketURL: {
+        port: 4000
+      }
+    }
+  },
+  watchOptions: {
+    poll: true
   }
 };
 
