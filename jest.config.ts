@@ -9,7 +9,17 @@ const config: Config = {
   setupFilesAfterEnv: [
     '@testing-library/jest-dom/extend-expect',
     '<rootDir>/src/setup-jest.ts'
-  ]
+  ],
+  collectCoverage: true,
+  collectCoverageFrom: ['./src/**', '!./src/index.tsx'],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  }
 };
 
 export default config;
