@@ -6,7 +6,7 @@ afterEach(cleanup);
 
 describe('The App component', () => {
   test('renders a greeting', () => {
-    const greetingText = 'Hello world!!';
+    const greetingText = 'Hello world!';
     render(<App />);
     expect(screen.getByText(greetingText)).toBeInTheDocument();
   });
