@@ -7,7 +7,6 @@
 - [ ] Check your code additions will fail neither code linting checks nor unit test.
 - [ ] Title your PR following the [semantic pull request spec](https://github.com/amannn/action-semantic-pull-request).
 - [ ] Tag the team to review your PR
-- [ ] Squash merge your PR on acceptance
 
 ### Issue, User Story, or Defect
 
@@ -17,4 +16,4 @@ Please provide a link to the GitHub Issue, Rally User Story, or Rally Defect thi
 
 Please describe your pull request.
 
-💔Thank you!
+Thank you!
