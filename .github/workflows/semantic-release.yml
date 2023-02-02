@@ -4,7 +4,7 @@ on:
     branches: [main, release]
 jobs:
   build:
-    name: Build and Test Deployable
+    name: Build and Test Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -12,8 +12,9 @@ jobs:
       - run: docker build -t sample-project/test-image -f Dockerfile.dev .
       - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
   release:
+    name: Run Semantic Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
       - run: npx semantic-release
