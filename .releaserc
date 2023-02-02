@@ -1,11 +1,31 @@
-branches:
-  - master
-  - name: develop
-    prerelease: true
-debug: true
-ci: true
-dryRun: true
-plugins:
-  - '@semantic-release/commit-analyzer'
-  - '@semantic-release/release-notes-generator'
-  - '@semantic-release/github'
+# branches:
+#   - master
+#   - name: develop
+#     prerelease: true
+# debug: true
+# ci: true
+# dryRun: true
+# plugins:
+#   - '@semantic-release/commit-analyzer'
+#   - '@semantic-release/release-notes-generator'
+#   - '@semantic-release/github'
+
+{
+  'branches': ['main', { name: 'develop', prerelease: true }],
+  'debug': 'false',
+  'dryRun': true,
+  'plugins':
+    [
+      '@semantic-release/commit-analyzer',
+      '@semantic-release/release-notes-generator',
+      [
+        '@semantic-release/changelog',
+        {
+          'changelogFile': 'CHANGELOG.md',
+          'changelogTitle': '# Semantic Versioning Changelog'
+        }
+      ],
+      ['@semantic-release/git', { 'assets': ['CHANGELOG.md'] }],
+      ['@semantic-release/github', { 'assets': [{ 'path': 'build/**' }] }]
+    ]
+}
