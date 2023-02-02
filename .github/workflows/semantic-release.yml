@@ -1,0 +1,19 @@
+name: Release Actions
+on:
+  push:
+    branches: [main, release]
+jobs:
+  build:
+    name: Build and Test Deployable
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+      - run: docker build -t sample-project/test-image -f Dockerfile.dev .
+      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npx semantic-release
