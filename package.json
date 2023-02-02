@@ -1,12 +1,13 @@
 {
   "name": "sample",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "",
   "scripts": {
     "build": "webpack --config config/webpack/webpack.prod.ts",
     "start": "webpack serve --config config/webpack/webpack.dev.ts --open",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "semantic-release": "semantic-release"
   },
   "keywords": [],
   "author": "",

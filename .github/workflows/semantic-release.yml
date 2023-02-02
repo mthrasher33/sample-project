@@ -1,27 +1,19 @@
-name: 'Semantic Release'
+name: Release Actions
 on:
-  pull_request:
-    branches: [develop, main]
+  push:
+    branches: [main, release]
 jobs:
-  release:
-    name: Print Release Info
+  build:
+    name: Build and Test Deployable
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      # you'll need to add an `id` in order to access output variables
-      - uses: codfish/semantic-release-action@v2
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - run: echo ${{ steps.semantic.outputs.release-version }}
-
-      - run: echo "$OUTPUTS"
-        env:
-          OUTPUTS: ${{ toJson(steps.semantic.outputs) }}
-
-      # - uses: codfish/some-other-action@v1
-      #   with:
-      #     release-version: ${{ steps.semantic.outputs.release-version }}
+      - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+      - run: docker build -t sample-project/test-image -f Dockerfile.dev .
+      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npx semantic-release
