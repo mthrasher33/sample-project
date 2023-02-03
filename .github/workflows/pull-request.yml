@@ -1,5 +1,4 @@
-name: 'Lint PR'
-
+name: 'Validate PR'
 on:
   pull_request:
     branches:
@@ -7,8 +6,8 @@ on:
       - release
       - main
 jobs:
-  main:
-    name: Validate PR Title
+  lint:
+    name: Lint PR Title
     runs-on: ubuntu-latest
     steps:
       - uses: amannn/action-semantic-pull-request@v5
@@ -47,3 +46,28 @@ jobs:
         with:
           header: pr-title-lint-error
           delete: true
+  task-check:
+    name: Check Tasks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: kentaro-m/task-completed-checker-action@v0.1.0
+        with:
+          repo-token: '${{secrets.GITHUB_TOKEN}}'
+  build:
+    name: Build and Test PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+      - run: docker build -t sample-project/test-image -f Dockerfile.dev .
+      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
+    # Build and Deploy with node in CI environment
+    # steps:
+    #   - uses: actions/checkout@v3
+    #   - name: Use Node.js ${{ matrix.node-version }}
+    #     uses: actions/setup-node@v3
+    #     with:
+    #       node-version: 18
+    #   - run: npm install
+    #   - run: npm run build --if-present
+    #   - run: npm test
