@@ -46,12 +46,15 @@ jobs:
         with:
           header: pr-title-lint-error
           delete: true
-  task-check:
-    runs-on: ubuntu-latest
-    steps:
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
         with:
           repo-token: '${{secrets.GITHUB_TOKEN}}'
+  # task-check:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: kentaro-m/task-completed-checker-action@v0.1.0
+  #       with:
+  #         repo-token: '${{secrets.GITHUB_TOKEN}}'
   build:
     name: Build and Test PR
     runs-on: ubuntu-latest
