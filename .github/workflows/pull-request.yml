@@ -47,10 +47,10 @@ jobs:
           header: pr-title-lint-error
           delete: true
   task-check:
-    name: Task Completion Check
+    name: Parse PR Body for Tasks
     runs-on: ubuntu-latest
     steps:
-      - uses: chromaui/task-completed-checker-action@main
+      - uses: kentaro-m/task-completed-checker-action@v0.1.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
   build:
