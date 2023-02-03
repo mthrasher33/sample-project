@@ -47,6 +47,7 @@ jobs:
           header: pr-title-lint-error
           delete: true
   task-check:
+    name: Check task completion
     runs-on: ubuntu-latest
     steps:
       - uses: chromaui/task-completed-checker-action@main
