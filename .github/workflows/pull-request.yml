@@ -47,6 +47,7 @@ jobs:
           header: pr-title-lint-error
           delete: true
   tasks:
+    name: Parse PR Body for Tasks
     runs-on: ubuntu-latest
     steps:
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
