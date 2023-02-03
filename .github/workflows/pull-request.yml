@@ -47,7 +47,6 @@ jobs:
           header: pr-title-lint-error
           delete: true
   task-check:
-    name: Check Tasks
     runs-on: ubuntu-latest
     steps:
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
