@@ -1,13 +1,11 @@
-name: 'Lint PR'
+name: 'Build and Test PR'
 on:
   pull_request:
     branches:
-      - develop
-      - release
+      - alpha
       - main
 jobs:
-  build:
-    name: Build and Test PR
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

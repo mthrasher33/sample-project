@@ -2,7 +2,8 @@ name: 'Lint PR'
 on:
   pull_request:
     branches:
-      - develop
+      - alpha
+      - main
 jobs:
   lint:
     name: Lint PR Title
