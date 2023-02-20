@@ -12,3 +12,14 @@ Enforce correct template on pr to release
 Enforce
 Create PR template for main
 Enforce correct template on pr to main
+
+How To:
+
+- pull from remote without merge commit:
+  git checkout new-feature # Go to the feature branch named "new-feature"
+  git rebase master
+
+# Now your feature have all the commits from master
+
+git checkout master #Go back to master
+git merge --ff-only new-feature

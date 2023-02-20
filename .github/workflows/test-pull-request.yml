@@ -1,19 +1,17 @@
-name: 'Lint PR'
+name: 'Build and Test PR'
 on:
   pull_request:
     branches:
-      - develop
-      - release
+      - alpha
       - main
 jobs:
-  build:
-    name: Build and Test PR
+  run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
       - run: docker build -t sample-project/test-image -f Dockerfile.dev .
-      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
+      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage && npx semantic-release
     # Build and Deploy with node in CI environment
     # steps:
     #   - uses: actions/checkout@v3
