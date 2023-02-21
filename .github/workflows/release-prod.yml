@@ -1,7 +1,7 @@
 name: Release
 on:
   push:
-    branches: [release, main]
+    branches: [main]
 jobs:
   stage_build:
     name: Tag and Build Image
@@ -14,35 +14,12 @@ jobs:
         with:
           extra_plugins: |
             @codedependant/semantic-release-docker
-        id: semantic # Need an `id` for output variables
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
-  deploy_stage:
-    if: github.ref == 'refs/heads/release'
-    name: Deploy Stage
-    needs: stage_build
-    runs-on: ubuntu-latest
-    environment:
-      name: stage
-      url: its a secret
-    steps:
-      - run: echo Deployed to Stage!
-  verify_stage:
-    if: github.ref == 'refs/heads/release'
-    name: Verify Stage
-    needs: deploy_stage
-    runs-on: ubuntu-latest
-    environment:
-      name: stage
-      url: its a secret
-    steps:
-      - run: The Tests Pass!
   deploy_prod:
-    if: github.ref == 'refs/heads/main'
     name: Deploy to Prod
-    # needs: verify_stage
     runs-on: ubuntu-latest
     environment:
       name: production
