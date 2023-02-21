@@ -1,0 +1,64 @@
+name: Deployment
+on:
+  push:
+    branches: [develop, release, main]
+jobs:
+  tag:
+    name: Run Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        id: semantic # Need an `id` for output variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Do something when a new release published
+        if: steps.semantic.outputs.new_release_published == 'true'
+        run: |
+          echo ${{ steps.semantic.outputs.new_release_version }}
+          echo ${{ steps.semantic.outputs.new_release_major_version }}
+          echo ${{ steps.semantic.outputs.new_release_minor_version }}
+          echo ${{ steps.semantic.outputs.new_release_patch_version }}
+  # tag:
+  #   name: Run Semantic Release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v3
+  #     - run: npx semantic-release
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # build:
+  #   name: Build and Test Docker Image
+  #   needs: semantic-release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+  #     - run: docker build -t mthrasher33/sample-project -t semantic-release .
+  #     - run: docker push mthrasher33/sample-project
+  deploy_dev:
+    runs-on: ubuntu-latest
+    name: Deploy Dev
+    needs: build
+    environment:
+      name: dev
+      url: its a secret
+    steps:
+      - uses: ubuntu-latest
+      - run: echo Deployed to dev!
+
+  deploy_test:
+    runs-on: ubuntu-latest
+    name: Deploy Test
+    needs: deploy_dev
+    environment:
+      name: test
+      url: its a secret
+    steps:
+      - uses: ubuntu-latest
+      - run: echo Deployed to test!
