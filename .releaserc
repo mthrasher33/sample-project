@@ -1,7 +1,5 @@
 branches:
   - main
-  - name: develop
-    prerelease: true
   - name: release
     prerelease: true
 debug: true
