@@ -3,7 +3,7 @@ on:
   push:
     branches: [release, main]
 jobs:
-  build:
+  stage_build:
     name: Tag and Build Image
     runs-on: ubuntu-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
   deploy_stage:
     if: github.ref == 'refs/heads/release'
     name: Deploy Stage
-    needs: build
+    needs: stage_build
     runs-on: ubuntu-latest
     environment:
       name: stage
@@ -38,7 +38,7 @@ jobs:
       name: stage
       url: its a secret
     steps:
-      - run: Automation Tests Pass!
+      - run: The Tests Pass!
   deploy_prod:
     if: github.ref == 'refs/heads/main'
     name: Deploy to Prod
