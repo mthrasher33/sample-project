@@ -1,0 +1,51 @@
+name: Deployment
+on:
+  push:
+    branches: [develop, release, main]
+jobs:
+  build:
+    name: Tag and Build Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v3
+        with:
+          extra_plugins: |
+            @codedependant/semantic-release-docker
+        id: semantic # Need an `id` for output variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+  deploy_dev:
+    if: github.ref == 'refs/heads/develop'
+    name: Deploy Dev
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: develop
+      url: its a secret
+    steps:
+      - run: echo Deployed to Dev!
+  deploy_test:
+    if: github.ref == 'refs/heads/develop'
+    name: Deploy Test
+    needs: deploy_dev
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+      url: its a secret
+    steps:
+      - run: echo Deployed to Test!
+  deploy_stage:
+    if: github.ref == 'refs/heads/release'
+    name: Deploy Stage
+    needs: deploy_dev
+    runs-on: ubuntu-latest
+    environment:
+      name: stage
+      url: its a secret
+    steps:
+      - run: echo Deployed to Stage!

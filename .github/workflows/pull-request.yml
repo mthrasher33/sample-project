@@ -1,0 +1,71 @@
+name: 'Pull Request'
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+      - release
+jobs:
+  # pr-lint:
+  #   name: Lint PR Title
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: amannn/action-semantic-pull-request@v5
+  #       id: lint_pr_title
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         subjectPattern: ^(?![A-Z]).+$
+  #         # If `subjectPattern` is configured, you can use this property to override
+  #         # the default error message that is shown when the pattern doesn't match.
+  #         # The variables `subject` and `title` can be used within the message.
+  #         subjectPatternError: |
+  #           The subject "{subject}" found in the pull request title "{title}"
+  #           didn't match the configured pattern. Please ensure that the subject
+  #           doesn't start with an uppercase character.
+  #     - uses: marocchino/sticky-pull-request-comment@v2
+  #       # When the previous steps fails, the workflow would stop. By adding this
+  #       # condition you can continue the execution with the populated error message.
+  #       if: always() && (steps.lint_pr_title.outputs.error_message != null)
+  #       with:
+  #         header: pr-title-lint-error
+  #         message: |
+  #           Hey there and thank you for opening this pull request! 👋🏼
+
+  #           We require pull request titles to follow the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/) and it looks like your proposed title needs to be adjusted.
+
+  #           Details:
+
+  #           ```
+  #           ${{ steps.lint_pr_title.outputs.error_message }}
+  #           ```
+
+  #     # Delete a previous comment when the issue has been resolved
+  #     - if: ${{ steps.lint_pr_title.outputs.error_message == null }}
+  #       uses: marocchino/sticky-pull-request-comment@v2
+  #       with:
+  #         header: pr-title-lint-error
+  #         delete: true
+  # task-check:
+  #   name: Parse PR Body for Tasks
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: kentaro-m/task-completed-checker-action@v0.1.0
+  #       with:
+  #         repo-token: '${{ secrets.GITHUB_TOKEN }}'
+  lint-staged:
+    name: Lint Staged Files
+    # needs: [pr-lint, task-check]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo linting staged files
+  build-test:
+    name: Build and Test Docker Image
+    # needs: [pr-lint, task-check, lint-staged]
+    needs: lint-staged
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+      - run: docker build -t sample-project/test-image -f Dockerfile.dev .
+      - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
