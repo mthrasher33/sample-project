@@ -23,3 +23,31 @@ How To:
 
 git checkout master #Go back to master
 git merge --ff-only new-feature
+
+Only allow merge commits
+Open PR to develop:
+Lint files,
+Lint PR Title,
+Lint completion tasks? <-- Idk if I like this anymore in a multi-branch strategy >
+Build a test image to make sure it builds and unit tests pass  
+Tag the image with the sha, build it, and allow for it to be promoted to test
+
+Open PR to beta:
+Build a test image to make sure it builds and unit tests pass
+
+Close PR to beta:
+Semantic relase a beta version
+Deploy beta version
+Create a github release and a tag
+Run automation suite to make sure stage is good
+Possibly run any other security/performance thing you want
+Announce the beta release?
+
+Open PR to main:
+Build a test image to make sure it builds and unit tests pass
+
+Close PR to main:
+Build a release version
+Deploy release version
+Create a github release and a tag
+Announce the release?
