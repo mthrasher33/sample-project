@@ -20,6 +20,7 @@ jobs:
           DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
   deploy_dev:
+    if: github.ref == 'refs/heads/develop'
     name: Deploy Dev
     needs: build
     runs-on: ubuntu-latest
@@ -29,6 +30,7 @@ jobs:
     steps:
       - run: echo Deployed to Dev!
   deploy_test:
+    if: github.ref == 'refs/heads/develop'
     name: Deploy Test
     needs: deploy_dev
     runs-on: ubuntu-latest
@@ -37,13 +39,13 @@ jobs:
       url: its a secret
     steps:
       - run: echo Deployed to Test!
-  # deploy_test:
-  #   runs-on: ubuntu-latest
-  #   name: Deploy Test
-  #   needs: deploy_dev
-  #   environment:
-  #     name: test
-  #     url: its a secret
-  #   steps:
-  #     - uses: ubuntu-latest
-  #     - run: echo Deployed to test!
+  deploy_stage:
+    if: github.ref == 'refs/heads/release'
+    name: Deploy Stage
+    needs: deploy_dev
+    runs-on: ubuntu-latest
+    environment:
+      name: stage
+      url: its a secret
+    steps:
+      - run: echo Deployed to Stage!
