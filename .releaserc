@@ -11,3 +11,20 @@ plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
   - '@semantic-release/github'
+  - [
+      '@codedependant/semantic-release-docker',
+      {
+        dockerTags:
+          ['latest', '{{version}}', '{{major}}-latest', '{{major}}.{{minor}}'],
+        dockerImage: 'sample-project',
+        dockerFile: 'Dockerfile',
+        dockerRegistry: 'quay.io',
+        dockerProject: 'mthrasher33',
+        dockerArgs:
+          {
+            API_TOKEN: true,
+            RELEASE_DATE: new Date().toISOString(),
+            RELEASE_VERSION: '{{next.version}}'
+          }
+      }
+    ]
