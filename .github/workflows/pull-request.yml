@@ -52,6 +52,11 @@ jobs:
       - uses: kentaro-m/task-completed-checker-action@v0.1.0
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
+  lint-staged:
+    name: Lint Staged Files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo linting staged files
   build-test:
     name: Build and Test Docker Image
     needs: [pr-lint, task-check]
