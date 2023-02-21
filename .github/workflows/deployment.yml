@@ -41,24 +41,24 @@ jobs:
   #     - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
   #     - run: docker build -t mthrasher33/sample-project -t semantic-release .
   #     - run: docker push mthrasher33/sample-project
-  deploy_dev:
-    runs-on: ubuntu-latest
-    name: Deploy Dev
-    needs: build
-    environment:
-      name: dev
-      url: its a secret
-    steps:
-      - uses: ubuntu-latest
-      - run: echo Deployed to dev!
+  # deploy_dev:
+  #   runs-on: ubuntu-latest
+  #   name: Deploy Dev
+  #   needs: build
+  #   environment:
+  #     name: dev
+  #     url: its a secret
+  #   steps:
+  #     - uses: ubuntu-latest
+  #     - run: echo Deployed to dev!
 
-  deploy_test:
-    runs-on: ubuntu-latest
-    name: Deploy Test
-    needs: deploy_dev
-    environment:
-      name: test
-      url: its a secret
-    steps:
-      - uses: ubuntu-latest
-      - run: echo Deployed to test!
+  # deploy_test:
+  #   runs-on: ubuntu-latest
+  #   name: Deploy Test
+  #   needs: deploy_dev
+  #   environment:
+  #     name: test
+  #     url: its a secret
+  #   steps:
+  #     - uses: ubuntu-latest
+  #     - run: echo Deployed to test!
