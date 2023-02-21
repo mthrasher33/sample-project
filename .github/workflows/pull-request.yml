@@ -59,7 +59,7 @@ jobs:
   build-test:
     name: Build and Test Docker Image
     # needs: [pr-lint, task-check, lint-staged]
-    needs: lint-staged
+    needs: [lint-staged, pr-lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
