@@ -24,11 +24,19 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: dev
+      name: develop
       url: its a secret
     steps:
-      - run: echo Deployed to dev!
-
+      - run: echo Deployed to Dev!
+  deploy_test:
+    name: Deploy Test
+    needs: deploy_dev
+    runs-on: ubuntu-latest
+    environment:
+      name: test
+      url: its a secret
+    steps:
+      - run: echo Deployed to Test!
   # deploy_test:
   #   runs-on: ubuntu-latest
   #   name: Deploy Test
