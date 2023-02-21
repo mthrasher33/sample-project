@@ -19,7 +19,7 @@ plugins:
         dockerImage: 'sample-project',
         dockerFile: 'Dockerfile',
         # dockerRegistry: 'https://hub.docker.com/',
-        dockerProject: 'mthrasher33',
+        dockerProject: 'mthrasher',
         dockerArgs:
           {
             API_TOKEN: true,
