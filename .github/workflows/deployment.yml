@@ -42,7 +42,7 @@ jobs:
   deploy_stage:
     if: github.ref == 'refs/heads/release'
     name: Deploy Stage
-    needs: deploy_dev
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: stage
