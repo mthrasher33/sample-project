@@ -23,3 +23,5 @@ How To:
 
 git checkout master #Go back to master
 git merge --ff-only new-feature
+
+test
