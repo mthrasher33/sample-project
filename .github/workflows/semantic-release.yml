@@ -1,14 +1,22 @@
-name: Release Actions
-on:
-  push:
-    branches: [main, alpha]
-jobs:
-  release:
-    name: Run Semantic Release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-      - run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# name: Release Actions
+# on:
+#   push:
+#     branches: [main, alpha]
+# jobs:
+#   # build:
+#   #   name: Build and Test Release
+#   #   runs-on: ubuntu-latest
+#   #   steps:
+#   #     - uses: actions/checkout@v3
+#   #     - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
+#   #     - run: docker build -t sample-project/test-image -f Dockerfile.dev .
+#   #     - run: docker run -e CI=true sample-project/test-image npm test -- --coverage
+#   release:
+#     name: Run Semantic Release
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v3
+#       - run: npx semantic-release
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
