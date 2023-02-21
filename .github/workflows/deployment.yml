@@ -3,8 +3,8 @@ on:
   push:
     branches: [develop, release, main]
 jobs:
-  tag:
-    name: Run Semantic Release
+  build:
+    name: Tag and Build Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,41 +19,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
-
-        # run: |
-        #   echo ${{ steps.semantic.outputs.new_release_version }}
-        #   echo ${{ steps.semantic.outputs.new_release_major_version }}
-        #   echo ${{ steps.semantic.outputs.new_release_minor_version }}
-        #   echo ${{ steps.semantic.outputs.new_release_patch_version }}
-  # tag:
-  #   name: Run Semantic Release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v3
-  #     - run: npx semantic-release
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # build:
-  #   name: Build and Test Docker Image
-  #   needs: semantic-release
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: docker login -u ${{secrets.DOCKER_REGISTRY_USER}} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
-  #     - run: docker build -t mthrasher33/sample-project -t semantic-release .
-  #     - run: docker push mthrasher33/sample-project
-  # deploy_dev:
-  #   runs-on: ubuntu-latest
-  #   name: Deploy Dev
-  #   needs: build
-  #   environment:
-  #     name: dev
-  #     url: its a secret
-  #   steps:
-  #     - uses: ubuntu-latest
-  #     - run: echo Deployed to dev!
+  deploy_dev:
+    name: Deploy Dev
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: its a secret
+    steps:
+      - run: echo Deployed to dev!
 
   # deploy_test:
   #   runs-on: ubuntu-latest
