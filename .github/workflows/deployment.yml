@@ -17,6 +17,8 @@ jobs:
         id: semantic # Need an `id` for output variables
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
+          DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
 
         # run: |
         #   echo ${{ steps.semantic.outputs.new_release_version }}
