@@ -18,20 +18,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOCKER_REGISTRY_USER: ${{secrets.DOCKER_REGISTRY_USER}}
           DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD}}
-  deploy_stage:
-    name: Deploy Stage
-    needs: stage_build
-    runs-on: ubuntu-latest
-    environment:
-      name: stage
-      url: its a secret
-    steps:
-      - run: echo Deployed to Stage!
-  verify_stage:
-    name: Verify Stage
-    needs: deploy_stage
-    runs-on: ubuntu-latest
-    environment:
-      name: stage
-    steps:
-      - run: echo The Automation Tests Pass!
+      - name: Deploy Stage
+        env:
+          name: stage
+          url: its a secret
+        run: echo Deploying to Stage
+      - name: Verify Stage
+        env:
+          name: stage
+          url: its a secret
+        run: echo Running Automation in Stage
+
+  # deploy_stage:
+  #   name: Deploy Stage
+  #   needs: stage_build
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: stage
+  #     url: its a secret
+  #   steps:
+  #     - run: echo Deployed to Stage!
+  # verify_stage:
+  #   name: Verify Stage
+  #   needs: deploy_stage
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: stage
+  #   steps:
+  #     - run: echo The Automation Tests Pass!
