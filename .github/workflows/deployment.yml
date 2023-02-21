@@ -49,3 +49,13 @@ jobs:
       url: its a secret
     steps:
       - run: echo Deployed to Stage!
+  verify_stage:
+    if: github.ref == 'refs/heads/release'
+    name: Deploy Stage
+    needs: deploy_stage
+    runs-on: ubuntu-latest
+    environment:
+      name: stage
+      url: its a secret
+    steps:
+      - run: Automation Tests Pass!
