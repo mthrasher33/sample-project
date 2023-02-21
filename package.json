@@ -26,6 +26,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.20.13",
+    "@codedependant/semantic-release-docker": "^4.3.0",
     "@semantic-release/changelog": "^6.0.2",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

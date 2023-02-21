@@ -1,9 +1,7 @@
 name: 'Pull Request'
 on:
   pull_request:
-    branches:
-      - alpha
-      - main
+    branches: [develop]
 jobs:
   # pr-lint:
   #   name: Lint PR Title
@@ -54,14 +52,12 @@ jobs:
   #         repo-token: '${{ secrets.GITHUB_TOKEN }}'
   lint-staged:
     name: Lint Staged Files
-    # needs: [pr-lint, task-check]
     runs-on: ubuntu-latest
     steps:
       - run: echo linting staged files
   build-test:
     name: Build and Test Docker Image
-    # needs: [pr-lint, task-check, lint-staged]
-    needs: lint-staged
+    needs: [lint-staged]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

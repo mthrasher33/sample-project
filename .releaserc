@@ -1,7 +1,5 @@
 branches:
   - main
-  - name: develop
-    prerelease: true
   - name: release
     prerelease: true
 debug: true
@@ -11,3 +9,11 @@ plugins:
   - '@semantic-release/commit-analyzer'
   - '@semantic-release/release-notes-generator'
   - '@semantic-release/github'
+  - ['@codedependant/semantic-release-docker', { dockerTags:
+          # Can I somehow get this to deploy something like develop-sha and develop-latest?
+          [
+            'latest',
+            '{{version}}',
+            '{{major}}-latest',
+            '{{major}}.{{minor}}'
+          ], dockerImage: 'sample-project', dockerFile: 'Dockerfile', dockerProject: 'mthrasher', dockerArgs: { API_TOKEN: true, RELEASE_DATE: new Date().toISOString(), RELEASE_VERSION: '{{next.version}}' } }]
