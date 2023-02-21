@@ -4,9 +4,6 @@ on:
     branches:
       - alpha
       - main
-    types:
-      - opened
-      - edited
 jobs:
   pr-lint:
     name: Lint PR Title
