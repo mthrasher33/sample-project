@@ -18,7 +18,7 @@ plugins:
           ['latest', '{{version}}', '{{major}}-latest', '{{major}}.{{minor}}'],
         dockerImage: 'sample-project',
         dockerFile: 'Dockerfile',
-        dockerRegistry: 'https://hub.docker.com/',
+        # dockerRegistry: 'https://hub.docker.com/',
         dockerProject: 'mthrasher33',
         dockerArgs:
           {
